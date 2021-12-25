@@ -3,11 +3,12 @@ if not present then
     return
 end
 
-if vim.fn.has('win32') == 0 then
+local os = vim.loop.os_uname().sysname
+if os == "Linux" and vim.fn.has("wsl") == 0 then
   telescope.setup {
     extensions = {
       media_files = {
-        filetypes = {"png", "webp", "jpg", "jpeg"},
+        filetypes = { "png", "webp", "jpg", "jpeg" },
         find_cmd = "rg"
       },
       fzf = {
@@ -15,11 +16,12 @@ if vim.fn.has('win32') == 0 then
         override_generic_sorter = true,
         override_file_sorter = true,
         case_mode = "smart_case",
-      }
+      },
     },
   }
-  telescope.load_extension('media_files')
-  telescope.load_extension('fzf')
+  telescope.load_extension("media_files")
+  telescope.load_extension("find_directories")
+  telescope.load_extension("fzf")
 else
   telescope.setup {
     extensions = {
@@ -31,5 +33,6 @@ else
       }
     },
   }
-  telescope.load_extension('fzf')
+  telescope.load_extension("fzf")
+  telescope.load_extension("find_directories")
 end

@@ -5,7 +5,7 @@ end
 
 todo_comments.setup {
   signs = true, -- show icons in the signs column
-  sign_priority = 8, -- sign priority
+  sign_priority = 2, -- sign priority
   -- keywords recognized as todo comments
   keywords = {
     FIX = {
@@ -54,8 +54,8 @@ todo_comments.setup {
       "--column",
     },
     -- regex that will be used to match keywords.
-    -- don't replace the (KEYWORDS) placeholder
+    -- don"t replace the (KEYWORDS) placeholder
     -- pattern = [[\b(KEYWORDS):]], -- ripgrep regex
-    pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
+    pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You"ll likely get false positives
   },
 }

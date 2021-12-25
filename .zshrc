@@ -9,9 +9,10 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/killery/.oh-my-zsh"
-alias cls="clear"
+export ZSH=$HOME/.oh-my-zsh
 export PATH=$PATH:/home/killery/.python/bin
+export PATH="$HOME/.poetry/bin:$PATH"
+
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -20,7 +21,7 @@ export PATH=$PATH:/home/killery/.python/bin
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
+# Setting this variable when ZSH_THEME="spaceship"
 # a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
@@ -32,13 +33,14 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+# Uncomment the following line to disable bi-weekly auto-update checks.
+DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
+# export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -79,6 +81,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+
 plugins=(git sudo docker pep8 tmux z composer npm zsh-autosuggestions zsh-syntax-highlighting web-search)
 
 source $ZSH/oh-my-zsh.sh
@@ -109,6 +112,53 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# On-demand rehash
+zshcache_time="$(date +%s%N)"
+
+autoload -Uz add-zsh-hook
+
+rehash_precmd() {
+  if [[ -a /var/cache/zsh/pacman ]]; then
+    local paccache_time="$(date -r /var/cache/zsh/pacman +%s%N)"
+    if (( zshcache_time < paccache_time )); then
+      rehash
+      zshcache_time="$paccache_time"
+    fi
+  fi
+}
+
+add-zsh-hook -Uz precmd rehash_precmd
+
+# omz
+alias zshconfig="nvim ~/.zshrc"
+alias ohmyzsh="nvim ~/.oh-my-zsh"
+
+# system
+alias cls="clear"
+
+# ls
+alias lla='ls -lah'
+alias la='ls -A'
+alias lm='ls -m'
+alias lr='ls -R'
+alias lg='ls -l --group-directories-first'
+alias ll="exa -l -g --icons"
+alias l="exa -l -g -a --icons"
+alias tree="exa -l -g --tree --icons"
+
+# git
+alias gcl='git clone --depth 1'
+alias gi='git init'
+alias ga='git add'
+alias gc='git commit -m'
+alias gp='git push origin master'
+alias gs="git status"
+
+# python
+alias p="poetry"
+alias pe="poetry env"
+alias pi="poetry init"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-source /home/killery/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
