@@ -159,6 +159,13 @@ alias p="poetry"
 alias pe="poetry env"
 alias pi="poetry init"
 
+# wireguard
+alias wgu="wg-quick up wg0"
+alias wgd="wg-quick down wg0"
+
+# minecraft
+alias minecraft="java -jar ~/minecraft/TLauncher-2.839.jar"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
