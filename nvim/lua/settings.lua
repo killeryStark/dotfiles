@@ -27,7 +27,7 @@ opt.cursorline = true
 -- Setting colorcolumn. This is set because of
 -- this (https://github.com/lukas-reineke/indent-blankline.nvim/issues/59)
 -- indent-blankline bug.
-opt.colorcolumn = "9999"
+opt.colorcolumn = "79"
 
 -- With set hidden you’re telling Neovim that you can
 -- have unsaved worked that’s not displayed on your screen.
