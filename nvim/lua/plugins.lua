@@ -1,8 +1,27 @@
 local use = require("packer").use
-local user_settings_file = require("../user_settings")
+local user_settings_file = require("user_settings")
 
 return require("packer").startup({function()
   use { "wbthomason/packer.nvim" }
+
+  -- These three plugins make CodeArt startup faster.
+  -- In addition FixCursorHold can fix this bug:
+  -- https://github.com/neovim/neovim/issues/12587
+  use {
+    "lewis6991/impatient.nvim",
+    config = function ()
+      require("impatient")
+    end
+  }
+  use {
+    "nathom/filetype.nvim",
+    config = function ()
+      vim.g.did_load_filetypes = 1
+    end
+  }
+  use {
+    "antoinemadec/FixCursorHold.nvim"
+  }
 
   -- Color schemes.
   use { "folke/tokyonight.nvim" }
@@ -11,7 +30,7 @@ return require("packer").startup({function()
   use { "shaunsingh/nord.nvim" }
   use { "navarasu/onedark.nvim" }
   use { "wuelnerdotexe/vim-enfocado" }
-  use { "Mofiqul/dracula.nvim" }
+  use {'Mofiqul/dracula.nvim'}
 
   -- TrueZen.nvim is a Neovim plugin that aims to provide a cleaner and less cluttered interface
   -- when toggled in either of it has three different modes (Ataraxis, Minimalist and Focus).
@@ -33,15 +52,6 @@ return require("packer").startup({function()
     event = "BufEnter",
     config = function()
       require("plugins/indent-blankline")
-    end
-  }
-
-  -- This plugin show trailing whitespace.
-  use {
-    "ntpeters/vim-better-whitespace",
-    event = "BufRead",
-    config = function()
-      require("plugins/better-whitespace")
     end
   }
 
@@ -86,18 +96,7 @@ return require("packer").startup({function()
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
-    event = "BufEnter",
-    cmd = {
-      "TSInstall",
-      "TSInstallSync",
-      "TSBufEnable",
-      "TSBufToggle",
-      "TSEnableAll",
-      "TSInstallFromGrammer",
-      "TSToggleAll",
-      "TSUpdate",
-      "TSUpdateSync"
-    },
+    after = "impatient.nvim",
     config = function()
       require("plugins/treesitter")
     end
@@ -140,27 +139,10 @@ return require("packer").startup({function()
     "nvim-telescope/telescope-fzf-native.nvim", run = "make",
     cmd = "Telescope"
   }
-  local os = vim.loop.os_uname().sysname
-  if (os == "Linux" or os == "Darwin") and vim.fn.has("wsl") == 0 then
-    use {
-      "nvim-lua/popup.nvim",
-      after = "telescope-fzf-native.nvim"
-    }
-    use {
-      "nvim-telescope/telescope-media-files.nvim",
-      after = "popup.nvim"
-    }
-    use {
-      "artart222/telescope_find_directories",
-      after = "telescope-media-files.nvim"
-    }
-  else
-    -- TODO: Find a way to lazyload this on windows.
-    use {
-      "artart222/telescope_find_directories",
-      after = "telescope-fzf-native.nvim"
-    }
-  end
+  use {
+    "artart222/telescope_find_directories",
+    after = "telescope-fzf-native.nvim"
+  }
   use {
     "nvim-telescope/telescope.nvim",
     after = "telescope_find_directories",
@@ -206,7 +188,11 @@ return require("packer").startup({function()
   }
   use {
     "L3MON4D3/LuaSnip",
-    after = "nvim-cmp"
+    after = "nvim-cmp",
+    config = function ()
+      require("luasnip/loaders/from_vscode").load()
+
+    end
   }
   use {
     "saadparwaiz1/cmp_luasnip",
@@ -225,12 +211,6 @@ return require("packer").startup({function()
     config = function ()
       require("lsp_signature").setup()
     end
-  }
-
-  -- VsCode like pictograms for lsp.
-  use {
-    "onsails/lspkind-nvim",
-    after = "friendly-snippets"
   }
 
   -- TODO: Do better lazyloading here for dap.
@@ -268,7 +248,7 @@ return require("packer").startup({function()
   -- Terminal.
   use {
     "akinsho/nvim-toggleterm.lua",
-    cmd = "ToggleTerm",
+    event = "BufEnter",
     config = function()
       require("plugins/toggleterm")
     end
@@ -300,17 +280,7 @@ return require("packer").startup({function()
   -- This is for html and it can autorename too!
   use {
     "windwp/nvim-ts-autotag",
-    ft = {
-      "html",
-      "javascript",
-      "javascriptreact",
-      "typescriptreact",
-      "svelte",
-      "vue",
-      "php",
-      "python",
-      "go"
-    }
+    after = "nvim-treesitter"
   }
 
   -- Scrollbar.
@@ -346,7 +316,9 @@ return require("packer").startup({function()
     "folke/which-key.nvim",
     event = "VimEnter",
     config = function()
-      require("which-key").setup()
+      require("maps")
+      require("user_settings")
+      require("plugins/which_key")
     end
   }
 
@@ -360,14 +332,14 @@ return require("packer").startup({function()
     end
   }
 
-  -- Neovim plugin to comment text in and out.
-  -- Supports commenting out the current line, a visual selection and a motion.
+  -- Neovim plugin to comment in/out text.
   use {
-    "terrortylor/nvim-comment",
-    cmd = "CommentToggle",
-    config = function()
-      require("nvim_comment").setup()
-    end
+    "b3nj5m1n/kommentary",
+    after = "nvim-treesitter",
+  }
+  use {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    after = "kommentary",
   }
 
   -- match-up is a plugin that lets you highlight, navigate, and operate on sets of matching text.
@@ -382,7 +354,7 @@ return require("packer").startup({function()
     event = "BufEnter"
   }
 
-  for key, plugin in pairs(additional_plugins) do
+  for _, plugin in pairs(additional_plugins) do
     if type(plugin) == "string" then
       use { plugin }
     else
@@ -390,11 +362,12 @@ return require("packer").startup({function()
     end
   end
 
-end,
-config = {
-  display = {
-    open_fn = function()
-      return require("packer.util").float({ border = "single" })
-    end
+  end,
+  config = {
+    display = {
+      open_fn = function()
+        return require("packer.util").float({ border = "single" })
+      end
+    }
   }
-}})
+})

@@ -12,10 +12,15 @@ nvim_treesitter.setup {
     enable = true,
   },
   indent = {
-    enable = true
+    enable = true,
+    disable = { "python" },
   },
   autotag = {
     enable = true
+  },
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = true,
   }
 }
 

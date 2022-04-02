@@ -7,13 +7,34 @@ end
 
 additional_plugins = {
   -- You can put your additional plugins here.
-  -- Syntax is like normal packer.nvim Syntax. Examples:
+  -- Syntax is like normal packer.nvim Syntax.
+  -- If you need to set some settings for your plugins
+  -- you must put configs in config = function() like below examples
 
   -- { "famiu/feline.nvim", branch = "develop" },
 
   -- "mhartington/formatter.nvim",
 
   -- { crispgm/nvim-go", ft = "go" },
+
+  --[[{
+    "iamcco/markdown-preview.nvim",
+    ft = "markdown",
+    config = function ()
+      vim.g.mkdp_auto_close = 0
+    end
+  },
+
+  {
+    "andweeb/presence.nvim",
+    config = function ()
+      require("presence"):setup({
+      log_level           = "info", -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
+      debounce_timeout    = 5,   -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
+      blacklist           = {},  -- A list of strings or Lua patterns that disable Rich Presence if the current file name, path, or workspace matches
+      })
+    end
+  }]]
 }
 
 -- Other settings here
@@ -30,3 +51,6 @@ additional_plugins = {
 
 user_lualine_style = 1 -- You can choose between 1, 2, 3, 4 and 5
 user_indent_blankline_style = 1 -- You can choose between 1, 2, 3, 4,5 and 6
+
+vim.cmd("autocmd FileType lua set tabstop=2")
+vim.cmd("autocmd Filetype lua set shiftwidth=2")

@@ -151,13 +151,16 @@ alias gcl='git clone --depth 1'
 alias gi='git init'
 alias ga='git add'
 alias gc='git commit -m'
-alias gp='git push origin master'
+alias gac='git commit -am'
+alias gp='git push'
 alias gs="git status"
+alias gl="git log --oneline --all --graph --pretty=format:'\"%Cblue %h | %Cgreen %ar %Cblue [ %an ] %C(cyan) %d %Creset %s\"'"
 
 # python
 alias p="poetry"
 alias pe="poetry env"
 alias pi="poetry init"
+alias pos="poetry shell"
 
 # wireguard
 alias wgu="wg-quick up wg0"

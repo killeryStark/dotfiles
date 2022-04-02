@@ -10,30 +10,18 @@ end
 g.dashboard_disable_statusline = 1
 g.dashboard_default_executive = "telescope"
 
--- g.dashboard_custom_header = {
---  "                                                                             ",
---  "                                                                             ",
---  "    █████████               █████            █████████              █████    ",
---  "   ███░░░░░███             ░░███            ███░░░░░███            ░░███     ",
---  "  ███     ░░░   ██████   ███████   ██████  ░███    ░███  ████████  ███████   ",
---  " ░███          ███░░███ ███░░███  ███░░███ ░███████████ ░░███░░███░░░███░    ",
---  " ░███         ░███ ░███░███ ░███ ░███████  ░███░░░░░███  ░███ ░░░   ░███     ",
---  " ░░███     ███░███ ░███░███ ░███ ░███░░░   ░███    ░███  ░███       ░███ ███ ",
---  "  ░░█████████ ░░██████ ░░████████░░██████  █████   █████ █████      ░░█████  ",
---  "   ░░░░░░░░░   ░░░░░░   ░░░░░░░░  ░░░░░░  ░░░░░   ░░░░░ ░░░░░        ░░░░░   ",
---  "                                                                             "
--- }
-
-
 g.dashboard_custom_header = {
-" _  ___ _ _                  _____ _             _    ",
-"| |/ (_) | |                / ____| |           | |   ",
-"| ' / _| | | ___ _ __ _   _| (___ | |_ __ _ _ __| | __",
-"|  < | | | |/ _ \ '__| | | |\___ \| __/ _` | '__| |/ /",
-"| . \| | | |  __/ |  | |_| |____) | || (_| | |  |   < ",
-"|_|\_\_|_|_|\___|_|   \__, |_____/ \__\__,_|_|  |_|\_\",
-"                       __/ |                          ",
-"                      |___/                           ",
+ "                                                                             ",
+ "                                                                             ",
+ "    █████████               █████            █████████              █████    ",
+ "   ███░░░░░███             ░░███            ███░░░░░███            ░░███     ",
+ "  ███     ░░░   ██████   ███████   ██████  ░███    ░███  ████████  ███████   ",
+ " ░███          ███░░███ ███░░███  ███░░███ ░███████████ ░░███░░███░░░███░    ",
+ " ░███         ░███ ░███░███ ░███ ░███████  ░███░░░░░███  ░███ ░░░   ░███     ",
+ " ░░███     ███░███ ░███░███ ░███ ░███░░░   ░███    ░███  ░███       ░███ ███ ",
+ "  ░░█████████ ░░██████ ░░████████░░██████  █████   █████ █████      ░░█████  ",
+ "   ░░░░░░░░░   ░░░░░░   ░░░░░░░░  ░░░░░░  ░░░░░   ░░░░░ ░░░░░        ░░░░░   ",
+ "                                                                             "
 }
 
 g.dashboard_custom_section = {
@@ -41,7 +29,7 @@ g.dashboard_custom_section = {
     b = { description = { "  Find directory            SPC f d" }, command = "Telescope find_directories" },
     c = { description = { "  Recents                   SPC f o" }, command = "Telescope oldfiles" },
     d = { description = { "  Find Word                 SPC f w" }, command = "Telescope live_grep" },
-    e = { description = { "洛 New File                  SPC f n" }, command = "DashboardNewFile" },
+    e = { description = { "  New File                  SPC f n" }, command = "DashboardNewFile" },
     f = { description = { "  Bookmarks                 SPC b m" }, command = "Telescope marks" },
     g = { description = { "  Load Last Session         SPC s l" }, command = "SessionLoad" }
 }
@@ -49,9 +37,5 @@ g.dashboard_custom_section = {
 g.dashboard_custom_footer = {
     " ",
     "CodeArt Loaded " .. plugins_count .. " plugins!  ",
-    "CodeArt v0.1"
+    "CodeArt v0.5"
 }
-
--- Disable statusline and cursorline in dashboard.
-vim.cmd("autocmd BufEnter * if &ft is \"dashboard\" | set laststatus=0 | else | set laststatus=2 | endif")
-vim.cmd("autocmd BufEnter * if &ft is \"dashboard\" | set nocursorline | endif")
