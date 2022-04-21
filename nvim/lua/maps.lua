@@ -64,6 +64,7 @@ map("v", "p", "\"_dP")
 
 -- Jk for going to normal mode while you are in insert mode.
 map("i", "jk", "<ESC>")
+map("v", "jk", "<ESC>")
 
 
 -- With this you can use > < multiple time for changing indent when you visual selected text.
@@ -105,7 +106,7 @@ wk.register({
     name = "NvimTree",
     t = { ":NvimTreeToggle<CR>", "Toggle NvimTree" },
     f = { ":NvimTreeFocus<CR>", "Focus on NvimTree" },
-    r = { ":NvimTreeRefresh<CR>", "Focus on NvimTree" },
+    r = { ":NvimTreeRefresh<CR>", "Refresh on NvimTree" },
   }
 }, { prefix = "<leader>" })
 
