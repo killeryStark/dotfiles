@@ -1,9 +1,9 @@
 local present, toggle_term = pcall(require, "toggleterm")
 if not present then
-    return
+  return
 end
 
-toggle_term.setup {
+toggle_term.setup({
   open_mapping = "<c-t>",
   hide_numbers = true, -- hide the number column in toggleterm buffers
   shade_terminals = false,
@@ -12,14 +12,47 @@ toggle_term.setup {
   persist_size = true,
   direction = "horizontal",
   close_on_exit = true, -- close the terminal window when the process exits
+  highlights = {
+    Normal = {
+      guibg = "Normal",
+    },
+  },
   float_opts = {
     border = "curved",
     width = 120,
     height = 40,
     winblend = 3,
-    highlights = {
-      border = "Normal",
-      background = "Normal",
-    }
-  }
-}
+  },
+})
+
+local Terminal = require("toggleterm.terminal").Terminal
+
+local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
+function _LAZYGIT_TOGGLE()
+  lazygit:toggle()
+end
+
+local node = Terminal:new({ cmd = "node", hidden = true, direction = "float" })
+function _NODE_TOGGLE()
+  node:toggle()
+end
+
+local ncdu = Terminal:new({ cmd = "ncdu", hidden = true, direction = "float" })
+function _NCDU_TOGGLE()
+  ncdu:toggle()
+end
+
+local htop = Terminal:new({ cmd = "htop", hidden = true, direction = "float" })
+function _HTOP_TOGGLE()
+  htop:toggle()
+end
+
+local python = Terminal:new({ cmd = "python", hidden = true, direction = "float" })
+function _PYTHON_TOGGLE()
+  python:toggle()
+end
+
+local ranger = Terminal:new({ cmd = "ranger", hidden = true, direction = "float" })
+function _RANGER_TOGGLE()
+  ranger:toggle()
+end

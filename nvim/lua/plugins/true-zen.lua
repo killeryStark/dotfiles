@@ -1,9 +1,9 @@
-local present, true_zen = pcall(require, "true-zen")
+local present, tzen = pcall(require, "true-zen")
 if not present then
   return
 end
 
-true_zen.setup {
+local truezen_config = {
   ui = {
     bottom = {
       laststatus = 0,
@@ -19,7 +19,7 @@ true_zen.setup {
       number = false,
       relativenumber = false,
       signcolumn = "no",
-	},
+    },
   },
   modes = {
     ataraxis = {
@@ -34,30 +34,47 @@ true_zen.setup {
       bg_configuration = true,
       quit = "untoggle",
       ignore_floating_windows = true,
-      affected_higroups = { NonText = {}, FoldColumn = {}, ColorColumn = {}, VertSplit = {}, StatusLine = {}, StatusLineNC = {}, SignColumn = {} }
+      affected_higroups = {
+        NonText = {},
+        FoldColumn = {},
+        ColorColumn = {},
+        VertSplit = {},
+        StatusLine = {},
+        StatusLineNC = {},
+        SignColumn = {},
+      },
     },
     focus = {
       margin_of_error = 5,
-      focus_method = "experimental"
+      focus_method = "experimental",
     },
   },
   integrations = {
-  vim_gitgutter = false,
-  galaxyline = false,
-  tmux = false,
-  gitsigns = false,
-  nvim_bufferline = false,
-  limelight = false,
-  twilight = false,
-  vim_airline = false,
-  vim_powerline = false,
-  vim_signify = false,
-  express_line = false,
-  lualine = false,
+    vim_gitgutter = false,
+    galaxyline = false,
+    tmux = false,
+    gitsigns = false,
+    nvim_bufferline = false,
+    limelight = false,
+    twilight = false,
+    vim_airline = false,
+    vim_powerline = false,
+    vim_signify = false,
+    express_line = false,
+    lualine = false,
   },
   misc = {
     on_off_commands = false,
     ui_elements_commands = false,
     cursor_by_mode = false,
-  }
+  },
 }
+
+local config = require("user_settings")
+if config.true_zen then
+  for k, v in pairs(config.true_zen) do
+    truezen_config[k] = v
+  end
+end
+
+tzen.setup(truezen_config)

@@ -129,12 +129,15 @@ rehash_precmd() {
 
 add-zsh-hook -Uz precmd rehash_precmd
 
+colorscript random
+
 # omz
 alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 
 # system
 alias cls="clear"
+alias rm="rm -i"
 
 # ls
 alias lla='ls -lah'
