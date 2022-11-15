@@ -4,3 +4,4 @@
 2. (Forge)[https://github.com/jmmaranan/forge]
 3. (Syncthing Indicator)[https://github.com/2nv2u/gnome-shell-extension-syncthing-indicator]
 4. (Vitals)[https://github.com/corecoding/Vitals]
+5. (WireGuard Indicator)[https://github.com/atareao/wireguard-indicator]
